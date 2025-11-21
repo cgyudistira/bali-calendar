@@ -1,0 +1,51 @@
+name: bali_calendar
+description: A comprehensive Balinese Hindu calendar application integrating Saka and Pawukon calendar systems.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.8.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  provider: ^6.1.0
+  
+  # Local Storage
+  shared_preferences: ^2.2.0
+  
+  # Notifications
+  flutter_local_notifications: ^16.0.0
+  
+  # Date/Time
+  intl: ^0.18.0
+  
+  # JSON
+  json_annotation: ^4.9.0
+  
+  # UI
+  google_fonts: ^6.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  # Code Generation
+  build_runner: ^2.4.0
+  json_serializable: ^6.7.0
+  
+  # Testing
+  mockito: ^5.4.0
+  
+  # Linting
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/
+    - assets/images/
+    - assets/data/
