@@ -170,7 +170,24 @@ class WetonCheckerScreen extends StatelessWidget {
         
         return ElevatedButton(
           onPressed: canCalculate
-              ? () => provider.calculateWeton()
+              ? () async {
+                  final error = await provider.calculateWeton();
+                  if (error != null && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            const Icon(Icons.error_outline, color: Colors.white),
+                            const SizedBox(width: 12),
+                            Expanded(child: Text(error)),
+                          ],
+                        ),
+                        backgroundColor: Colors.red[700],
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  }
+                }
               : null,
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -476,11 +493,12 @@ class WetonCheckerScreen extends StatelessWidget {
   Future<void> _selectDate(BuildContext context, WetonProvider provider) async {
     final initialDate = provider.selectedBirthDate ?? DateTime.now();
     final firstDate = DateTime(1900);
-    final lastDate = DateTime.now();
+    final lastDate = DateTime(2100);
     
     final picked = await showDatePicker(
       context: context,
-      initialDate: initialDate.isAfter(lastDate) ? lastDate : initialDate,
+      initialDate: initialDate.isAfter(lastDate) ? lastDate : 
+                   (initialDate.isBefore(firstDate) ? firstDate : initialDate),
       firstDate: firstDate,
       lastDate: lastDate,
       builder: (context, child) {
@@ -496,9 +514,22 @@ class WetonCheckerScreen extends StatelessWidget {
           child: child!,
         );
       },
+      helpText: 'Select Birth Date (1900-2100)',
     );
     
     if (picked != null) {
+      // Validate date range
+      if (picked.year < 1900 || picked.year > 2100) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Please select a date between 1900 and 2100'),
+              backgroundColor: Colors.orange[700],
+            ),
+          );
+        }
+        return;
+      }
       provider.setSelectedBirthDate(picked);
     }
   }

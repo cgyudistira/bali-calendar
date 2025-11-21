@@ -30,7 +30,13 @@ class SakaService {
   static final DateTime _sakaKalaEnd = DateTime(2003, 1, 3);
 
   /// Calculate Saka date from Gregorian date
-  SakaDate gregorianToSaka(DateTime date) {
+  /// Returns null if date is out of supported range (1900-2100)
+  SakaDate? gregorianToSaka(DateTime date) {
+    // Validate date range
+    if (date.year < 1900 || date.year > 2100) {
+      return null;
+    }
+    
     // Normalize to midnight
     final normalizedDate = DateTime(date.year, date.month, date.day);
 
@@ -90,8 +96,13 @@ class SakaService {
   }
 
   /// Get current Saka date
-  SakaDate getCurrentSakaDate() {
+  SakaDate? getCurrentSakaDate() {
     return gregorianToSaka(DateTime.now());
+  }
+  
+  /// Validate if a date is within supported range
+  bool isDateInRange(DateTime date) {
+    return date.year >= 1900 && date.year <= 2100;
   }
 
   /// Calculate Sasih information (year, month, nampih status)

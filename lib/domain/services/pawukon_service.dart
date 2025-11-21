@@ -16,7 +16,13 @@ class PawukonService {
   static const int _pivotPawukonDay1970 = 33;
 
   /// Calculate Pawukon date from Gregorian date
-  PawukonDate gregorianToPawukon(DateTime date) {
+  /// Returns null if date is out of supported range (1900-2100)
+  PawukonDate? gregorianToPawukon(DateTime date) {
+    // Validate date range
+    if (date.year < 1900 || date.year > 2100) {
+      return null;
+    }
+    
     // Normalize to midnight
     final normalizedDate = DateTime(date.year, date.month, date.day);
 
@@ -143,14 +149,24 @@ class PawukonService {
   }
 
   /// Get current Pawukon date
-  PawukonDate getCurrentPawukonDate() {
+  PawukonDate? getCurrentPawukonDate() {
     return gregorianToPawukon(DateTime.now());
+  }
+  
+  /// Validate if a date is within supported range
+  bool isDateInRange(DateTime date) {
+    return date.year >= 1900 && date.year <= 2100;
   }
 
   /// Calculate days until next otonan (210-day cycle birthday)
-  int daysUntilNextOtonan(DateTime birthDate, DateTime currentDate) {
+  /// Returns null if dates are out of range
+  int? daysUntilNextOtonan(DateTime birthDate, DateTime currentDate) {
     final birthPawukon = gregorianToPawukon(birthDate);
     final currentPawukon = gregorianToPawukon(currentDate);
+    
+    if (birthPawukon == null || currentPawukon == null) {
+      return null;
+    }
 
     final dayDiff = currentPawukon.dayInCycle - birthPawukon.dayInCycle;
     final daysUntilNext = dayDiff <= 0 ? -dayDiff : _dayPawukon - dayDiff;
@@ -159,18 +175,22 @@ class PawukonService {
   }
 
   /// Get next otonan date
-  DateTime getNextOtonan(DateTime birthDate, DateTime currentDate) {
+  /// Returns null if dates are out of range
+  DateTime? getNextOtonan(DateTime birthDate, DateTime currentDate) {
     final daysUntil = daysUntilNextOtonan(birthDate, currentDate);
+    if (daysUntil == null) return null;
     return currentDate.add(Duration(days: daysUntil));
   }
 
   /// Get list of future otonan dates
+  /// Returns empty list if dates are out of range
   List<DateTime> getFutureOtonans(DateTime birthDate, int count) {
     final otonans = <DateTime>[];
     DateTime current = DateTime.now();
 
     for (int i = 0; i < count; i++) {
       final nextOtonan = getNextOtonan(birthDate, current);
+      if (nextOtonan == null) break;
       otonans.add(nextOtonan);
       current = nextOtonan.add(const Duration(days: 1));
     }

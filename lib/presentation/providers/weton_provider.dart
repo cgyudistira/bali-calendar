@@ -52,8 +52,11 @@ class WetonProvider extends ChangeNotifier {
   }
 
   /// Calculate weton for selected birth date
-  Future<void> calculateWeton() async {
-    if (_selectedBirthDate == null) return;
+  /// Returns error message if calculation fails, null if successful
+  Future<String?> calculateWeton() async {
+    if (_selectedBirthDate == null) {
+      return 'Please select a birth date';
+    }
 
     _isCalculating = true;
     _calculatedWeton = null;
@@ -62,9 +65,16 @@ class WetonProvider extends ChangeNotifier {
     try {
       await Future.delayed(const Duration(milliseconds: 300)); // Simulate calculation
       _calculatedWeton = _wetonService.calculateWeton(_selectedBirthDate!);
+      
+      if (_calculatedWeton == null) {
+        return 'Birth date is out of supported range (1900-2100)';
+      }
+      
+      return null; // Success
     } catch (e) {
       debugPrint('Error calculating weton: $e');
       _calculatedWeton = null;
+      return 'Failed to calculate weton: ${e.toString()}';
     } finally {
       _isCalculating = false;
       notifyListeners();
@@ -96,7 +106,7 @@ class WetonProvider extends ChangeNotifier {
   /// Get next otonan date
   DateTime? getNextOtonan() {
     if (_calculatedWeton == null) return null;
-    return _wetonService.getNextOtonan(_calculatedWeton!.birthDate);
+    return _wetonService.getNextOtonan(_calculatedWeton!.birthDate, DateTime.now());
   }
 
   /// Get days until next otonan

@@ -31,6 +31,13 @@ class BaliCalendarService {
     final sakaDate = _sakaService.gregorianToSaka(normalizedDate);
     final pawukonDate = _pawukonService.gregorianToPawukon(normalizedDate);
     
+    // If calculations failed due to out-of-range date, throw error
+    if (sakaDate == null || pawukonDate == null) {
+      throw CalendarCalculationException(
+        'Date out of supported range (1900-2100): ${normalizedDate.year}',
+      );
+    }
+    
     return BaliCalendarDate(
       gregorianDate: normalizedDate,
       sakaDate: sakaDate,
@@ -40,8 +47,15 @@ class BaliCalendarService {
   }
 
   /// Get complete Balinese calendar information for a specific date
-  BaliCalendarDate getCalendarForDate(DateTime date) {
+  /// Returns null if date is out of supported range (1900-2100)
+  BaliCalendarDate? getCalendarForDate(DateTime date) {
     final normalizedDate = DateTime(date.year, date.month, date.day);
+    
+    // Validate date range
+    if (!_sakaService.isDateInRange(normalizedDate)) {
+      return null;
+    }
+    
     final cacheKey = _getCacheKey(normalizedDate);
     
     // Check cache first
@@ -52,8 +66,19 @@ class BaliCalendarService {
     final sakaDate = _sakaService.gregorianToSaka(normalizedDate);
     final pawukonDate = _pawukonService.gregorianToPawukon(normalizedDate);
     
+    // Double-check calculations succeeded
+    if (sakaDate == null || pawukonDate == null) {
+      return null;
+    }
+    
     // Get holy days if service is available
-    final holyDays = _holyDayService?.getHolyDaysForDate(normalizedDate) ?? [];
+    List<HolyDay> holyDays = [];
+    try {
+      holyDays = _holyDayService?.getHolyDaysForDate(normalizedDate) ?? [];
+    } catch (e) {
+      // Log error but continue without holy days
+      print('Warning: Failed to load holy days for $normalizedDate: $e');
+    }
 
     final calendarDate = BaliCalendarDate(
       gregorianDate: normalizedDate,
@@ -89,11 +114,18 @@ class BaliCalendarService {
   }
 
   /// Get calendar information for current date
-  BaliCalendarDate getCurrentCalendar() {
+  /// Returns null if current date is out of supported range
+  BaliCalendarDate? getCurrentCalendar() {
     return getCalendarForDate(DateTime.now());
+  }
+  
+  /// Validate if a date is within supported range
+  bool isDateInRange(DateTime date) {
+    return _sakaService.isDateInRange(date);
   }
 
   /// Get calendar information for a month (with holy days if service is available)
+  /// Skips dates that are out of supported range
   List<BaliCalendarDate> getCalendarForMonth(int year, int month) {
     final dates = <BaliCalendarDate>[];
     final firstDay = DateTime(year, month, 1);
@@ -101,7 +133,10 @@ class BaliCalendarService {
 
     for (int day = 1; day <= lastDay.day; day++) {
       final date = DateTime(year, month, day);
-      dates.add(getCalendarForDate(date));
+      final calendarDate = getCalendarForDate(date);
+      if (calendarDate != null) {
+        dates.add(calendarDate);
+      }
     }
 
     return dates;
@@ -202,4 +237,14 @@ class BaliCalendarService {
       'isBudaCemeng': calendar.isBudaCemeng,
     };
   }
+}
+
+/// Exception thrown when calendar calculations fail
+class CalendarCalculationException implements Exception {
+  final String message;
+  
+  CalendarCalculationException(this.message);
+  
+  @override
+  String toString() => 'CalendarCalculationException: $message';
 }

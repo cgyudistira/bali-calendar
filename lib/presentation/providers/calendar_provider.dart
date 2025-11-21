@@ -30,8 +30,14 @@ class CalendarProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   /// Get calendar date for the selected date
-  BaliCalendarDate get selectedCalendarDate {
+  /// Returns null if date is out of range
+  BaliCalendarDate? get selectedCalendarDate {
     return _calendarService.getCalendarForDate(_selectedDate);
+  }
+  
+  /// Check if selected date is in valid range
+  bool get isSelectedDateValid {
+    return _calendarService.isDateInRange(_selectedDate);
   }
 
   /// Set the selected date

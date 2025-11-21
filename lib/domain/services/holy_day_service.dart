@@ -20,17 +20,117 @@ class HolyDayService {
   /// Load holy days from JSON file
   Future<void> loadHolyDays() async {
     try {
+      // Load JSON file
       final String jsonString = await rootBundle.loadString('assets/data/holy_days.json');
+      
+      // Parse JSON
       final Map<String, dynamic> jsonData = json.decode(jsonString);
       
-      final List<dynamic> holyDaysList = jsonData['holyDays'] as List<dynamic>;
-      _holyDays = holyDaysList
-          .map((json) => HolyDay.fromJson(json as Map<String, dynamic>))
-          .toList();
+      // Validate JSON structure
+      if (!jsonData.containsKey('holyDays')) {
+        throw HolyDayLoadException(
+          'Invalid JSON structure: missing "holyDays" key',
+          HolyDayLoadErrorType.invalidStructure,
+        );
+      }
       
+      final dynamic holyDaysData = jsonData['holyDays'];
+      if (holyDaysData is! List) {
+        throw HolyDayLoadException(
+          'Invalid JSON structure: "holyDays" must be a list',
+          HolyDayLoadErrorType.invalidStructure,
+        );
+      }
+      
+      // Parse holy days with validation
+      final List<HolyDay> parsedHolyDays = [];
+      for (int i = 0; i < holyDaysData.length; i++) {
+        try {
+          final holyDayJson = holyDaysData[i];
+          if (holyDayJson is! Map<String, dynamic>) {
+            throw HolyDayLoadException(
+              'Invalid holy day at index $i: must be an object',
+              HolyDayLoadErrorType.invalidData,
+            );
+          }
+          
+          // Validate required fields
+          _validateHolyDayJson(holyDayJson, i);
+          
+          final holyDay = HolyDay.fromJson(holyDayJson);
+          parsedHolyDays.add(holyDay);
+        } catch (e) {
+          // Log error but continue loading other holy days
+          print('Warning: Failed to parse holy day at index $i: $e');
+          // Re-throw if it's a critical error
+          if (e is HolyDayLoadException) {
+            rethrow;
+          }
+        }
+      }
+      
+      if (parsedHolyDays.isEmpty) {
+        throw HolyDayLoadException(
+          'No valid holy days found in JSON file',
+          HolyDayLoadErrorType.emptyData,
+        );
+      }
+      
+      _holyDays = parsedHolyDays;
       _isLoaded = true;
+      
+      print('Successfully loaded ${_holyDays.length} holy days');
+    } on HolyDayLoadException {
+      // Re-throw our custom exceptions
+      rethrow;
+    } on FormatException catch (e) {
+      throw HolyDayLoadException(
+        'Invalid JSON format: ${e.message}',
+        HolyDayLoadErrorType.parseError,
+      );
     } catch (e) {
-      throw Exception('Failed to load holy days: $e');
+      // Handle file not found or other errors
+      if (e.toString().contains('Unable to load asset')) {
+        throw HolyDayLoadException(
+          'Holy days data file not found',
+          HolyDayLoadErrorType.fileNotFound,
+        );
+      }
+      throw HolyDayLoadException(
+        'Failed to load holy days: $e',
+        HolyDayLoadErrorType.unknown,
+      );
+    }
+  }
+  
+  /// Validate holy day JSON structure
+  void _validateHolyDayJson(Map<String, dynamic> json, int index) {
+    final requiredFields = ['id', 'name', 'description', 'category', 'dates'];
+    
+    for (final field in requiredFields) {
+      if (!json.containsKey(field)) {
+        throw HolyDayLoadException(
+          'Holy day at index $index is missing required field: $field',
+          HolyDayLoadErrorType.missingField,
+        );
+      }
+    }
+    
+    // Validate dates field is a list
+    if (json['dates'] is! List) {
+      throw HolyDayLoadException(
+        'Holy day at index $index has invalid "dates" field: must be a list',
+        HolyDayLoadErrorType.invalidData,
+      );
+    }
+    
+    // Validate dates list is not empty
+    final dates = json['dates'] as List;
+    if (dates.isEmpty) {
+      throw HolyDayLoadException(
+        'Holy day at index $index has empty "dates" list',
+        HolyDayLoadErrorType.invalidData,
+      );
     }
   }
   
@@ -239,4 +339,46 @@ class HolyDayService {
     
     return getHolyDaysInRange(firstDay, lastDay).length;
   }
+}
+
+/// Exception thrown when holy day data fails to load
+class HolyDayLoadException implements Exception {
+  final String message;
+  final HolyDayLoadErrorType errorType;
+  
+  HolyDayLoadException(this.message, this.errorType);
+  
+  @override
+  String toString() => 'HolyDayLoadException: $message';
+  
+  /// Get user-friendly error message
+  String getUserMessage() {
+    switch (errorType) {
+      case HolyDayLoadErrorType.fileNotFound:
+        return 'Holy days data file is missing. Please reinstall the app.';
+      case HolyDayLoadErrorType.parseError:
+        return 'Holy days data is corrupted. Please reinstall the app.';
+      case HolyDayLoadErrorType.invalidStructure:
+        return 'Holy days data format is invalid. Please update the app.';
+      case HolyDayLoadErrorType.invalidData:
+        return 'Some holy days data is invalid. The app will continue with available data.';
+      case HolyDayLoadErrorType.missingField:
+        return 'Holy days data is incomplete. Please update the app.';
+      case HolyDayLoadErrorType.emptyData:
+        return 'No holy days data available. Please reinstall the app.';
+      case HolyDayLoadErrorType.unknown:
+        return 'Failed to load holy days data. Please try restarting the app.';
+    }
+  }
+}
+
+/// Types of holy day loading errors
+enum HolyDayLoadErrorType {
+  fileNotFound,
+  parseError,
+  invalidStructure,
+  invalidData,
+  missingField,
+  emptyData,
+  unknown,
 }

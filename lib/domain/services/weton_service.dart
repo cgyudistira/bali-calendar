@@ -9,8 +9,13 @@ class WetonService {
   WetonService(this._pawukonService);
 
   /// Calculate weton from birth date
-  Weton calculateWeton(DateTime birthDate) {
+  /// Returns null if birth date is out of supported range (1900-2100)
+  Weton? calculateWeton(DateTime birthDate) {
     final pawukonDate = _pawukonService.gregorianToPawukon(birthDate);
+    
+    if (pawukonDate == null) {
+      return null;
+    }
 
     // Calculate neptu (total urip value)
     final neptu = pawukonDate.urip;
@@ -27,7 +32,8 @@ class WetonService {
   }
 
   /// Get next otonan date (210-day cycle birthday)
-  DateTime getNextOtonan(DateTime birthDate, DateTime currentDate) {
+  /// Returns null if dates are out of supported range
+  DateTime? getNextOtonan(DateTime birthDate, DateTime currentDate) {
     return _pawukonService.getNextOtonan(birthDate, currentDate);
   }
 
