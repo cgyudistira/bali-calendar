@@ -233,7 +233,7 @@ class HolyDaysScreen extends StatelessWidget {
             const SizedBox(height: 8),
             if (holyDay.dates.isNotEmpty)
               Text(
-                _formatDate(holyDay.dates.first),
+                _formatDate(holyDay.dateTimeList.first),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Colors.grey[600],
                 ),
@@ -386,7 +386,7 @@ class HolyDaysScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    ...holyDay.dates.take(5).map((date) {
+                    ...holyDay.dateTimeList.take(5).map((date) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 4),
                         child: Text(

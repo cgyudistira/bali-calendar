@@ -6,7 +6,7 @@ import 'bali_calendar_service.dart';
 /// Recommendation result with score and reasoning
 class DayRecommendation {
   final DateTime date;
-  final BaliCalendarDate calendarDate;
+  final BaliCalendarDate? calendarDate;
   final int score; // 0-100
   final List<String> positiveFactors;
   final List<String> considerations;
@@ -29,6 +29,18 @@ class AIRecommenderService {
   /// Analyze a specific date and return score with reasoning
   DayRecommendation analyzeDate(DateTime date, {Weton? userWeton}) {
     final calendarDate = _calendarService.getCalendarForDate(date);
+    
+    // Handle null calendar date (out of range)
+    if (calendarDate == null) {
+      return DayRecommendation(
+        date: date,
+        calendarDate: null,
+        score: 0,
+        positiveFactors: [],
+        considerations: ['Date is out of supported range (1900-2100)'],
+      );
+    }
+    
     final positiveFactors = <String>[];
     final considerations = <String>[];
     int score = 50; // Base score

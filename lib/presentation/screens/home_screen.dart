@@ -63,19 +63,20 @@ class HomeScreen extends StatelessWidget {
       title: Consumer<CalendarProvider>(
         builder: (context, calendarProvider, child) {
           final currentCalendar = calendarProvider.selectedCalendarDate;
-          final sakaDate = currentCalendar.sakaDate;
+          final sakaDate = currentCalendar?.sakaDate;
           
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(AppStrings.appName),
-              Text(
-                'Saka ${sakaDate.year}, ${sakaDate.sasih}',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.normal,
+              if (sakaDate != null)
+                Text(
+                  'Saka ${sakaDate.year}, ${sakaDate.sasih}',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
-              ),
             ],
           );
         },

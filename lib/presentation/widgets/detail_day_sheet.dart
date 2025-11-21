@@ -137,23 +137,100 @@ class DetailDaySheet extends StatelessWidget {
       iconColor: AppColors.secondary,
       title: AppStrings.sakaCalendar,
       content: '${AppStrings.year} ${sakaDate.year}\n'
-          '${sakaDate.sasih}\n'
-          '${sakaDate.dayInfo.displayName} ${sakaDate.day}',
+          '${sakaDate.sasih.name}\n'
+          '${_getDayInfoName(sakaDate.dayInfo)} ${sakaDate.day}',
     );
   }
 
-  /// Build Pawukon section
+  /// Build Pawukon section with all Wara cycles
   Widget _buildPawukonSection(BuildContext context) {
     final pawukonDate = calendarDate.pawukonDate;
-    return _buildSection(
-      context,
-      icon: Icons.refresh,
-      iconColor: AppColors.info,
-      title: AppStrings.pawukonCalendar,
-      content: '${AppStrings.wuku}: ${pawukonDate.wuku.name}\n'
-          '${AppStrings.saptawara}: ${pawukonDate.saptaWara.name}\n'
-          '${AppStrings.pancawara}: ${pawukonDate.pancaWara.name}\n'
-          '${AppStrings.triwara}: ${pawukonDate.triWara.name}',
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.info.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.refresh,
+                size: 20,
+                color: AppColors.info,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              AppStrings.pawukonCalendar,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.only(left: 44),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Wuku
+              _buildWaraRow(context, '${AppStrings.wuku}:', pawukonDate.wuku.name),
+              const SizedBox(height: 8),
+              
+              // All Wara from Eka to Dasa
+              _buildWaraRow(context, 'Eka Wara:', pawukonDate.ekaWara.name.isEmpty ? '-' : pawukonDate.ekaWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Dwi Wara:', pawukonDate.dwiWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, '${AppStrings.triwara}:', pawukonDate.triWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Catur Wara:', pawukonDate.caturWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, '${AppStrings.pancawara}:', pawukonDate.pancaWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Sad Wara:', pawukonDate.sadWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, '${AppStrings.saptawara}:', pawukonDate.saptaWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Asta Wara:', pawukonDate.astaWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Sanga Wara:', pawukonDate.sangaWara.name),
+              const SizedBox(height: 8),
+              _buildWaraRow(context, 'Dasa Wara:', pawukonDate.dasaWara.name),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  
+  /// Build a single wara row with label and value
+  Widget _buildWaraRow(BuildContext context, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 100,
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        ),
+      ],
     );
   }
 
@@ -300,5 +377,22 @@ class DetailDaySheet extends StatelessWidget {
     }
     
     return descriptions.join(' • ');
+  }
+  
+  /// Get display name for SasihDayInfo
+  String _getDayInfoName(dynamic dayInfo) {
+    final name = dayInfo.toString().split('.').last;
+    switch (name) {
+      case 'penanggal':
+        return 'Penanggal';
+      case 'purnama':
+        return 'Purnama';
+      case 'pangelong':
+        return 'Pangelong';
+      case 'tilem':
+        return 'Tilem';
+      default:
+        return name;
+    }
   }
 }

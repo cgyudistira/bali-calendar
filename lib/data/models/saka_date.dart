@@ -73,3 +73,18 @@ enum SasihDayInfo {
   pangelong,  // Waning moon (1-14)
   tilem,      // New moon (day 15 of pangelong)
 }
+
+extension SasihDayInfoExtension on SasihDayInfo {
+  String get displayName {
+    switch (this) {
+      case SasihDayInfo.penanggal:
+        return 'Penanggal';
+      case SasihDayInfo.purnama:
+        return 'Purnama';
+      case SasihDayInfo.pangelong:
+        return 'Pangelong';
+      case SasihDayInfo.tilem:
+        return 'Tilem';
+    }
+  }
+}

@@ -26,7 +26,7 @@ void main() async {
   
   // Initialize services in dependency order
   print('📦 Initializing services...');
-  final settingsRepository = SettingsRepository();
+  final settingsRepository = await SettingsRepository.create();
   final sakaService = SakaService();
   final pawukonService = PawukonService();
   final holyDayService = HolyDayService();

@@ -160,7 +160,7 @@ class BaliCalendarService {
 
     while (current.isBefore(endDate) || current.isAtSameMomentAs(endDate)) {
       final calendar = getCalendarForDate(current);
-      if (calendar.isPurnama) {
+      if (calendar != null && calendar.isPurnama) {
         dates.add(current);
       }
       current = current.add(const Duration(days: 1));
@@ -177,7 +177,7 @@ class BaliCalendarService {
 
     while (current.isBefore(endDate) || current.isAtSameMomentAs(endDate)) {
       final calendar = getCalendarForDate(current);
-      if (calendar.isTilem) {
+      if (calendar != null && calendar.isTilem) {
         dates.add(current);
       }
       current = current.add(const Duration(days: 1));
@@ -199,7 +199,7 @@ class BaliCalendarService {
 
     while (current.isBefore(endDate) || current.isAtSameMomentAs(endDate)) {
       final calendar = getCalendarForDate(current);
-      if (calendar.isAnggaraKasih) {
+      if (calendar != null && calendar.isAnggaraKasih) {
         dates.add(current);
       }
       current = current.add(const Duration(days: 1));
@@ -216,7 +216,7 @@ class BaliCalendarService {
 
     while (current.isBefore(endDate) || current.isAtSameMomentAs(endDate)) {
       final calendar = getCalendarForDate(current);
-      if (calendar.isBudaCemeng) {
+      if (calendar != null && calendar.isBudaCemeng) {
         dates.add(current);
       }
       current = current.add(const Duration(days: 1));
@@ -230,11 +230,11 @@ class BaliCalendarService {
     final calendar = getCalendarForDate(date);
 
     return {
-      'isPurnama': calendar.isPurnama,
-      'isTilem': calendar.isTilem,
-      'isKajengKliwon': calendar.isKajengKliwon,
-      'isAnggaraKasih': calendar.isAnggaraKasih,
-      'isBudaCemeng': calendar.isBudaCemeng,
+      'isPurnama': calendar?.isPurnama ?? false,
+      'isTilem': calendar?.isTilem ?? false,
+      'isKajengKliwon': calendar?.isKajengKliwon ?? false,
+      'isAnggaraKasih': calendar?.isAnggaraKasih ?? false,
+      'isBudaCemeng': calendar?.isBudaCemeng ?? false,
     };
   }
 }

@@ -1,8 +1,8 @@
 # Documentation
 
-Folder ini berisi dokumentasi implementasi untuk Bali Calendar App.
+This folder contains implementation documentation for the Bali Calendar App.
 
-## File Dokumentasi
+## Documentation Files
 
 ### ALGORITHM_DOCUMENTATION.md
 Dokumentasi lengkap algoritma kalender Bali:
@@ -14,15 +14,15 @@ Dokumentasi lengkap algoritma kalender Bali:
 - Implementation notes dan testing guidelines
 
 ### PAWUKON_IMPLEMENTATION_SUMMARY.md
-Dokumentasi lengkap implementasi Pawukon Calendar Engine (Task 3):
-- Implementasi PawukonService dengan semua 10 wewaran
+Complete documentation of Pawukon Calendar Engine implementation (Task 3):
+- PawukonService implementation with all 10 wewaran
 - Utility methods (Kajeng Kliwon, Otonan calculations)
 - Special rules (Jaya Tiga, Kala Tiga, Dangu Pat)
 - Test results dan verifikasi
 
 ### WETON_SERVICE_IMPLEMENTATION.md
-Dokumentasi lengkap implementasi WetonService (Task 4.1):
-- Implementasi calculateWeton dengan neptu calculation
+Complete documentation of WetonService implementation (Task 4.1):
+- calculateWeton implementation with neptu calculation
 - Otonan date calculations
 - Weton characteristics dan guidance
 - Test results dan verifikasi
@@ -31,18 +31,18 @@ Dokumentasi lengkap implementasi WetonService (Task 4.1):
 Dokumentasi setup Flutter project (Task 6)
 
 ### HOLY_DAY_IMPLEMENTATION.md
-Dokumentasi implementasi holy days system (Tasks 7-8)
+Documentation of holy days system implementation (Tasks 7-8)
 
 ### SETTINGS_REPOSITORY.md
-Dokumentasi implementasi settings repository (Task 9)
+Documentation of settings repository implementation (Task 9)
 
 ### NOTIFICATION_SERVICE.md
-Dokumentasi implementasi notification service (Task 10)
+Documentation of notification service implementation (Task 10)
 
 ### CALENDAR_HOLY_DAY_INTEGRATION.md
-Dokumentasi integrasi calendar dengan holy days (Task 8)
+Documentation of calendar integration with holy days (Task 8)
 
-## Struktur Proyek
+## Project Structure
 
 ```
 bali-calendar-app/
@@ -89,7 +89,7 @@ dart run test/pawukon_utilities_test.dart
 dart run test/weton_service_test.dart
 ```
 
-## Status Implementasi
+## Implementation Status
 
 ✅ Task 1: Saka Calendar Service - COMPLETE
 ✅ Task 2: Saka Date Models - COMPLETE
@@ -97,6 +97,6 @@ dart run test/weton_service_test.dart
 ✅ Task 4.1: WetonService - COMPLETE
 ✅ Task 5.1: BaliCalendarService - COMPLETE
 
-## Catatan
+## Notes
 
-Semua implementasi telah diverifikasi dan ditest. Dokumentasi ini akan terus diupdate seiring dengan progress implementasi fitur-fitur baru.
+All implementations have been verified and tested. This documentation will be continuously updated as new features are implemented.

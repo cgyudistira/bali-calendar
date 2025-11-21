@@ -80,7 +80,7 @@ class WetonService {
         personality:
             'Pribadi yang kuat, beruntung, dan memiliki daya tarik spiritual tinggi.',
         strengths:
-            'Kepemimpinan alami, kemampuan spiritual, keberuntungan dalam usaha.',
+            ['Kepemimpinan alami', 'kemampuan spiritual', 'keberuntungan dalam usaha'],
         guidance:
             'Gunakan kekuatan Anda untuk membantu orang lain dan jaga keseimbangan spiritual.',
         auspiciousDays: [
@@ -94,7 +94,7 @@ class WetonService {
         personality:
             'Pribadi yang seimbang, bijaksana, dan memiliki intuisi yang baik.',
         strengths:
-            'Kebijaksanaan, kemampuan berkomunikasi, keseimbangan emosional.',
+            ['Kebijaksanaan', 'kemampuan berkomunikasi', 'keseimbangan emosional'],
         guidance:
             'Kembangkan potensi spiritual dan jaga hubungan baik dengan sesama.',
         auspiciousDays: [
@@ -106,7 +106,7 @@ class WetonService {
       return const WetonCharacteristics(
         personality:
             'Pribadi yang stabil, pekerja keras, dan memiliki tekad kuat.',
-        strengths: 'Ketekunan, loyalitas, kemampuan beradaptasi.',
+        strengths: ['Ketekunan', 'loyalitas', 'kemampuan beradaptasi'],
         guidance:
             'Fokus pada pengembangan diri dan jaga kesehatan spiritual melalui persembahyangan.',
         auspiciousDays: [
@@ -118,7 +118,7 @@ class WetonService {
       return const WetonCharacteristics(
         personality:
             'Pribadi yang sederhana, jujur, dan memiliki hati yang baik.',
-        strengths: 'Kejujuran, ketulusan, kemampuan berempati.',
+        strengths: ['Kejujuran', 'ketulusan', 'kemampuan berempati'],
         guidance:
             'Perkuat spiritual melalui persembahyangan rutin dan jaga hubungan dengan keluarga.',
         auspiciousDays: [
@@ -130,7 +130,7 @@ class WetonService {
       return const WetonCharacteristics(
         personality:
             'Pribadi yang memerlukan perhatian khusus dalam pengembangan spiritual.',
-        strengths: 'Potensi untuk berkembang, kemampuan belajar.',
+        strengths: ['Potensi untuk berkembang', 'kemampuan belajar'],
         guidance:
             'Perbanyak persembahyangan, ikuti upacara keagamaan, dan minta bimbingan spiritual dari pemangku atau sulinggih.',
         auspiciousDays: [

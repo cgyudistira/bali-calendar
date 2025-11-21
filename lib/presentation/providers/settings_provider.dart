@@ -127,8 +127,7 @@ class SettingsProvider extends ChangeNotifier {
   /// Set notification time
   Future<void> setNotificationTime(TimeOfDay time) async {
     final updated = _notificationPreferences.copyWith(
-      notificationHour: time.hour,
-      notificationMinute: time.minute,
+      notificationTime: time,
     );
     await updateNotificationPreferences(updated);
   }

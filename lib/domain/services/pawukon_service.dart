@@ -202,6 +202,7 @@ class PawukonService {
   /// Kajeng Kliwon occurs when TriWara is Kajeng (2) and PancaWara is Kliwon (4)
   bool isKajengKliwon(DateTime date) {
     final pawukon = gregorianToPawukon(date);
+    if (pawukon == null) return false;
     return pawukon.triWara.id == 2 && pawukon.pancaWara.id == 4;
   }
 

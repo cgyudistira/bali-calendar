@@ -473,13 +473,18 @@ class AIRecommenderScreen extends StatelessWidget {
             const SizedBox(height: 8),
             
             // Balinese calendar info
-            Text(
-              '${recommendation.calendarDate.sakaDate.sasih}, '
-              'Wuku ${recommendation.calendarDate.pawukonDate.wuku.name}',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
+            if (recommendation.calendarDate != null &&
+                recommendation.calendarDate!.sakaDate != null && 
+                recommendation.calendarDate!.pawukonDate != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                '${recommendation.calendarDate!.sakaDate!.sasih.name}, '
+                'Wuku ${recommendation.calendarDate!.pawukonDate!.wuku.name}',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey[600],
+                ),
               ),
-            ),
+            ],
             const SizedBox(height: 16),
             
             // Score interpretation
@@ -499,7 +504,7 @@ class AIRecommenderScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       context.read<AIRecommenderProvider>()
-                          ._recommenderService.getScoreInterpretation(recommendation.score),
+                          .recommenderService.getScoreInterpretation(recommendation.score),
                       style: TextStyle(
                         color: _getScoreColor(recommendation.score),
                         fontWeight: FontWeight.bold,
@@ -576,7 +581,7 @@ class AIRecommenderScreen extends StatelessWidget {
               ),
               child: Text(
                 context.read<AIRecommenderProvider>()
-                    ._recommenderService.getActivityGuidance(activityType, recommendation.score),
+                    .recommenderService.getActivityGuidance(activityType, recommendation.score),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import '../models/notification_preferences.dart';
 
 /// Repository for managing app settings using SharedPreferences
 class SettingsRepository {
@@ -50,6 +51,16 @@ class SettingsRepository {
     }
   }
   
+  /// Get user's birth date (async version for compatibility)
+  Future<DateTime?> getUserBirthDate() async {
+    return loadBirthDate();
+  }
+  
+  /// Save user's birth date (async version for compatibility)
+  Future<bool> saveUserBirthDate(DateTime birthDate) async {
+    return saveBirthDate(birthDate);
+  }
+  
   /// Check if birth date is saved
   bool hasBirthDate() {
     return _prefs.containsKey(_keyBirthDate);
@@ -88,6 +99,11 @@ class SettingsRepository {
     } catch (e) {
       throw SettingsException('Failed to load theme mode: $e');
     }
+  }
+  
+  /// Get theme mode (async version for compatibility)
+  Future<ThemeMode> getThemeMode() async {
+    return loadThemeMode();
   }
   
   // ==================== Notifications ====================
@@ -345,6 +361,36 @@ class SettingsRepository {
     } catch (e) {
       throw SettingsException('Failed to reset notification preferences: $e');
     }
+  }
+  
+  /// Get notification preferences (async version for compatibility)
+  Future<NotificationPreferences> getNotificationPreferences() async {
+    final prefs = loadAllNotificationPreferences();
+    return NotificationPreferences(
+      enablePurnama: prefs['purnama'] as bool,
+      enableTilem: prefs['tilem'] as bool,
+      enableKajengKliwon: prefs['kajengKliwon'] as bool,
+      enableTumpek: prefs['tumpek'] as bool,
+      enableMajorHolidays: prefs['majorHolidays'] as bool,
+      enableOtonan: prefs['otonan'] as bool,
+      advanceDays: prefs['advanceDays'] as int,
+      notificationTime: prefs['notificationTime'] as TimeOfDay,
+    );
+  }
+  
+  /// Save notification preferences (async version for compatibility)
+  Future<void> saveNotificationPreferences(NotificationPreferences preferences) async {
+    await saveAllNotificationPreferences(
+      enabled: true,
+      purnama: preferences.enablePurnama,
+      tilem: preferences.enableTilem,
+      kajengKliwon: preferences.enableKajengKliwon,
+      tumpek: preferences.enableTumpek,
+      majorHolidays: preferences.enableMajorHolidays,
+      otonan: preferences.enableOtonan,
+      advanceDays: preferences.advanceDays,
+      notificationTime: preferences.notificationTime,
+    );
   }
 }
 

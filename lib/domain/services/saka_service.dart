@@ -1,6 +1,8 @@
 import '../../data/models/saka_date.dart';
+import 'lunar_phase_service.dart';
 
 /// Service for calculating Saka calendar dates (Lunar calendar)
+/// Uses Babadbali.com algorithm for accurate lunar phase calculation
 class SakaService {
   // Constants
   static const int _dayNgunaratri = 63; // Ngunaratri cycle
@@ -84,7 +86,8 @@ class SakaService {
     final sasih = _getSasih(sasihId, isNampih, sakaYear);
 
     // Determine day info (Penanggal, Pangelong, Purnama, Tilem)
-    final dayInfo = _getSasihDayInfo(day, isPangelong, isNgunaratri, sasih, sakaYear);
+    // Pass normalizedDate for lookup table verification
+    final dayInfo = _getSasihDayInfo(day, isPangelong, isNgunaratri, sasih, sakaYear, normalizedDate);
 
     return SakaDate(
       year: sakaYear,
@@ -284,22 +287,21 @@ class SakaService {
   }
 
   /// Determine day info (Penanggal, Pangelong, Purnama, Tilem)
-  SasihDayInfo _getSasihDayInfo(int day, bool isPangelong, bool isNgunaratri, Sasih sasih, int saka) {
+  /// Uses Babadbali.com algorithm for accurate lunar phase calculation
+  SasihDayInfo _getSasihDayInfo(int day, bool isPangelong, bool isNgunaratri, Sasih sasih, int saka, DateTime date) {
+    // Use Babadbali algorithm for accurate Purnama/Tilem detection
+    if (LunarPhaseService.isPurnama(date)) {
+      return SasihDayInfo.purnama;
+    }
+    if (LunarPhaseService.isTilem(date)) {
+      return SasihDayInfo.tilem;
+    }
+    
+    // Return appropriate phase based on pangelong/penanggal
     if (isPangelong) {
-      if (day == 15 || (day == 14 && isNgunaratri)) {
-        return SasihDayInfo.tilem;
-      } else if (day == 14 && sasih.id == 6 && saka == 1921) {
-        // Special case: Kapitu 1921
-        return SasihDayInfo.tilem;
-      } else {
-        return SasihDayInfo.pangelong;
-      }
+      return SasihDayInfo.pangelong;
     } else {
-      if (day == 15 || (day == 14 && isNgunaratri)) {
-        return SasihDayInfo.purnama;
-      } else {
-        return SasihDayInfo.penanggal;
-      }
+      return SasihDayInfo.penanggal;
     }
   }
 

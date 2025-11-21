@@ -239,10 +239,7 @@ class SettingsScreen extends StatelessWidget {
   /// Build notification time picker
   Widget _buildNotificationTimePicker(BuildContext context, SettingsProvider provider) {
     final prefs = provider.notificationPreferences;
-    final time = TimeOfDay(
-      hour: prefs.notificationHour,
-      minute: prefs.notificationMinute,
-    );
+    final time = prefs.notificationTime;
     
     return ListTile(
       leading: const Icon(Icons.access_time, color: AppColors.secondary),

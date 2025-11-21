@@ -6,12 +6,14 @@ class Weton {
   final PawukonDate pawukonDate;
   final int neptu;
   final String classification;
+  final WetonCharacteristics? characteristics;
 
   const Weton({
     required this.birthDate,
     required this.pawukonDate,
     required this.neptu,
     required this.classification,
+    this.characteristics,
   });
 
   /// Get weton name (combination of Wuku, Saptawara, Pancawara)
@@ -27,7 +29,7 @@ class Weton {
 /// Weton characteristics based on traditional Balinese beliefs
 class WetonCharacteristics {
   final String personality;
-  final String strengths;
+  final List<String> strengths;
   final String guidance;
   final List<String> auspiciousDays;
 

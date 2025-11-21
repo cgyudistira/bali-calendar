@@ -4,7 +4,7 @@ import '../../data/models/weton.dart';
 
 /// Provider for managing AI recommender state
 class AIRecommenderProvider extends ChangeNotifier {
-  final AIRecommenderService _recommenderService;
+  final AIRecommenderService recommenderService;
   
   String _activityType = '';
   Weton? _userWeton;
@@ -13,7 +13,7 @@ class AIRecommenderProvider extends ChangeNotifier {
   bool _isGenerating = false;
   String? _errorMessage;
 
-  AIRecommenderProvider(this._recommenderService);
+  AIRecommenderProvider(this.recommenderService);
 
   /// Get activity type
   String get activityType => _activityType;
@@ -85,7 +85,7 @@ class AIRecommenderProvider extends ChangeNotifier {
         return _errorMessage;
       }
       
-      _recommendations = _recommenderService.recommendDays(
+      _recommendations = recommenderService.recommendDays(
         startDate: startDate,
         daysToSearch: _searchPeriod,
         topN: 3,
