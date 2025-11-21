@@ -258,111 +258,168 @@
     - Make it reusable across screens
     - _Requirements: 8.4_
 
-- [ ] 12. Build home screen with calendar widget
-  - [ ] 12.1 Create calendar widget
+- [x] 12. Build home screen with calendar widget
+
+
+
+
+
+
+
+
+
+
+
+  - [x] 12.1 Create calendar widget
+
+
+
+
     - Create CalendarWidget displaying monthly grid
     - Implement month navigation (swipe left/right)
     - Display Gregorian dates as primary
     - Add current date highlighting with gold accent
     - _Requirements: 4.1, 8.6_
-  - [ ] 12.2 Add event indicators to calendar
+  - [x] 12.2 Add event indicators to calendar
+
+
+
+
+
+
+
     - Create DateIndicator widget for colored dots
-    - Display gold dots for holy days
-    - Display blue dots for Purnama/Tilem
-    - Display red dots for Kajeng Kliwon
+    - Display yellow dots for holy days
+    - Display red dots for Purnama
+    - Display black dots for Tilem
+    - Display blue dots for Kajeng Kliwon
     - Support multiple indicators per date
     - _Requirements: 4.2, 4.3, 4.4, 4.5_
-  - [ ] 12.3 Implement home screen layout
+  - [x] 12.3 Implement home screen layout
+
+
+
+
     - Create HomeScreen with app bar showing current Saka date
     - Integrate CalendarWidget
     - Add settings icon to app bar
     - Apply Balinese pattern background
     - _Requirements: 4.1, 8.4_
-  - [ ] 12.4 Add calendar state management
+  - [x] 12.4 Add calendar state management
+
+
+
+
     - Create CalendarProvider using Provider package
     - Manage selected date state
     - Manage current month state
     - Load calendar data for visible month
     - _Requirements: 4.1_
 
-- [ ] 13. Build detail day bottom sheet
-  - [ ] 13.1 Create bottom sheet UI
+- [x] 13. Build detail day bottom sheet
+
+
+
+  - [x] 13.1 Create bottom sheet UI
+
+
     - Create DetailDaySheet widget with rounded top corners (24px)
     - Add drag handle at top
     - Implement gradient header with sunrise colors
     - Create sections for Gregorian, Saka, Pawukon, Holy Days
     - _Requirements: 4.6, 8.1, 8.5_
-  - [ ] 13.2 Create Saka display widget
+  - [x] 13.2 Create Saka display widget
+
     - Create SakaDisplay widget showing year, sasih, day, phase
     - Format as "Year 1946, Sasih Kasa, Penanggal 5"
     - Add calendar icon
     - _Requirements: 1.1, 1.4_
-  - [ ] 13.3 Create Pawukon display widget
+  - [x] 13.3 Create Pawukon display widget
+
     - Create PawukonDisplay widget showing wuku, saptawara, pancawara, triwara
     - Format as multi-line display
     - Add cycle icon
     - _Requirements: 2.1, 2.2, 2.5_
-  - [ ] 13.4 Implement holy days section
+  - [x] 13.4 Implement holy days section
+
     - Display list of holy days for selected date
     - Show name and description for each
     - Use EventChip widget for visual consistency
     - Handle case when no holy days exist
     - _Requirements: 3.6_
-  - [ ] 13.5 Wire bottom sheet to calendar taps
+  - [x] 13.5 Wire bottom sheet to calendar taps
+
+
     - Add onTap handler to calendar dates
     - Show bottom sheet with animation
     - Pass selected date to bottom sheet
     - Load complete calendar data for date
     - _Requirements: 4.6_
 
-- [ ] 14. Build holy days list screen
-  - [ ] 14.1 Create holy days screen layout
+- [x] 14. Build holy days list screen
+
+
+
+  - [x] 14.1 Create holy days screen layout
+
+
     - Create HolyDaysScreen with app bar
     - Add search bar at top
     - Create categorized list with expandable sections
     - _Requirements: 3.6_
-  - [ ] 14.2 Implement category filtering
+  - [x] 14.2 Implement category filtering
+
     - Add filter chips for categories (Purnama, Tilem, Kajeng Kliwon, Tumpek, Major)
     - Implement filter logic to show/hide categories
     - Update list when filters change
     - _Requirements: 3.6_
-  - [ ] 14.3 Create holy day list items
+  - [x] 14.3 Create holy day list items
+
     - Create HolyDayCard widget
     - Display holy day name, date, and brief description
     - Add "View Details" button
     - Use category colors for visual distinction
     - _Requirements: 3.6_
-  - [ ] 14.4 Implement search functionality
+  - [x] 14.4 Implement search functionality
+
     - Add search text field
     - Filter holy days by name as user types
     - Show "no results" message when appropriate
     - _Requirements: 3.6_
 
-- [ ] 15. Build weton checker screen
-  - [ ] 15.1 Create weton checker layout
+- [x] 15. Build weton checker screen
+
+
+
+  - [x] 15.1 Create weton checker layout
+
     - Create WetonCheckerScreen with app bar
     - Add date picker for birth date selection
     - Add "Calculate" button
     - Create results card section
     - _Requirements: 5.1_
-  - [ ] 15.2 Implement weton calculation flow
+  - [x] 15.2 Implement weton calculation flow
+
     - Wire date picker to state
     - Call WetonService.calculateWeton() on button press
     - Display loading indicator during calculation
     - Show results in formatted card
     - _Requirements: 5.1, 5.2_
-  - [ ] 15.3 Display weton results
+  - [x] 15.3 Display weton results
+
     - Show wuku name with star icon
     - Show saptawara, pancawara, triwara
     - Display characteristics (personality, strengths, guidance)
     - Format in visually appealing card layout
     - _Requirements: 5.2, 5.5_
-  - [ ] 15.4 Add otonan countdown
+  - [x] 15.4 Add otonan countdown
+
     - Calculate and display next otonan date
     - Show countdown in days
     - Add "Set Reminder" button
     - _Requirements: 5.3_
-  - [ ] 15.5 Implement save weton functionality
+  - [x] 15.5 Implement save weton functionality
+
     - Add "Save My Weton" button
     - Store birth date in SettingsRepository
     - Show confirmation message

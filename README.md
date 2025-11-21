@@ -11,7 +11,7 @@ A comprehensive mobile calendar application that integrates traditional Balinese
 
 ## 📊 Development Progress
 
-**Current Status**: Core Backend Complete (Tasks 1-11 / 22) - **50% Complete**
+**Current Status**: UI Screens Implementation (Tasks 1-15 / 22) - **68% Complete**
 
 ✅ **Completed:**
 - Calendar calculation engines (Saka, Pawukon, Weton)
@@ -19,14 +19,18 @@ A comprehensive mobile calendar application that integrates traditional Balinese
 - Settings and data persistence
 - Notification system with local notifications
 - Material 3 theme and styling
+- Home screen with calendar widget
+- Detail day bottom sheet
+- Holy days list screen with filtering
+- Weton checker screen
 - 100+ comprehensive tests
 
 🚧 **In Progress:**
-- UI screens implementation
-- Navigation and state management
+- Navigation and bottom navigation bar
+- AI recommender service
 
 📋 **Upcoming:**
-- AI recommender service
+- Settings screen
 - Final polish and optimization
 
 ## ✨ Features
@@ -464,20 +468,21 @@ class BaliCalendarDate {
 - [x] Color scheme and typography
 - [x] Google Fonts integration
 
-### Phase 6: UI Screens (In Progress)
-- [ ] Home screen with calendar widget
-- [ ] Detail day bottom sheet
-- [ ] Holy days list screen
-- [ ] Weton checker screen
+### Phase 6: UI Screens ✅
+- [x] Home screen with calendar widget
+- [x] Detail day bottom sheet
+- [x] Holy days list screen with search and filtering
+- [x] Weton checker screen with otonan countdown
 - [ ] Settings screen
+- [ ] Bottom navigation bar
 - [ ] Animations and transitions
 
-### Phase 6: AI Recommender
+### Phase 7: AI Recommender
 - [ ] Recommendation algorithm
 - [ ] AI recommender screen
 - [ ] Day analysis functionality
 
-### Phase 7: Testing & Refinement
+### Phase 8: Testing & Refinement
 - [ ] Comprehensive testing
 - [ ] Cultural accuracy verification
 - [ ] Performance optimization
