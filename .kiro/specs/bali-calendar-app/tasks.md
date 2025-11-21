@@ -228,23 +228,31 @@
     - Add cancelAllNotifications() method
     - _Requirements: 6.3, 6.4_
 
-- [ ] 11. Create Material 3 theme and styling
-  - [ ] 11.1 Implement app theme configuration
+- [x] 11. Create Material 3 theme and styling
+
+
+
+  - [x] 11.1 Implement app theme configuration
+
     - Create AppTheme class in lib/core/theme/app_theme.dart
     - Define light theme with gold primary (#FFD700), sunset orange secondary
     - Define dark theme with same gold primary, adjusted background colors
     - Configure Material 3 design tokens
     - _Requirements: 8.1, 8.2_
-  - [ ] 11.2 Create color constants
+  - [x] 11.2 Create color constants
+
     - Define event colors: holyDayColor (gold), purnamaColor (blue), kajengKliwonColor (red)
     - Define gradient colors for sunrise/sunset effects
     - Create color scheme for light and dark modes
     - _Requirements: 4.3, 4.4, 4.5, 8.3_
-  - [ ] 11.3 Configure typography
+  - [x] 11.3 Configure typography
+
     - Set up Google Fonts (Poppins for headlines, Inter for body)
     - Define text styles: headline1, headline2, body1, body2, caption
     - _Requirements: 8.1_
-  - [ ] 11.4 Create Balinese pattern widget
+  - [x] 11.4 Create Balinese pattern widget
+
+
     - Create BaliPattern widget for subtle background patterns
     - Implement at 10% opacity
     - Make it reusable across screens
