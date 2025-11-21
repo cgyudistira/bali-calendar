@@ -115,11 +115,10 @@ bali-calendar-app/
 │   ├── pawukon_utilities_test.dart    # Pawukon utilities tests
 │   └── weton_service_test.dart        # WetonService tests
 ├── doc/                               # Documentation
+│   ├── ALGORITHM_DOCUMENTATION.md     # Complete algorithm documentation
 │   ├── PAWUKON_IMPLEMENTATION_SUMMARY.md
 │   ├── WETON_SERVICE_IMPLEMENTATION.md
 │   └── README.md                      # Documentation index
-├── alg/                               # Algorithm documentation
-│   └── algdoc.md
 └── README.md                          # This file
 ```
 
@@ -193,7 +192,7 @@ neptu = wukuUrip + saptawaraUrip + pancawaraUrip + triwaraUrip
 nextOtonan = birthDate + (n × 210 days)
 ```
 
-For detailed algorithm documentation, see [Algorithm Documentation](alg/algdoc.md).
+For detailed algorithm documentation, see [Algorithm Documentation](doc/ALGORITHM_DOCUMENTATION.md).
 
 ## 🚀 Getting Started
 
