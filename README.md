@@ -32,20 +32,6 @@ A comprehensive mobile calendar application that integrates traditional Balinese
 - ✅ Weton checker screen with otonan countdown
 - ✅ AI recommender screen with Dewasa Ayu scoring
 - ✅ Settings screen with theme and notification preferences
-- ✅ Bottom navigation bar with 4 main tabs
-- ✅ Animations and transitions
-- ✅ Error handling and validation
-- ✅ Service integration and wiring
-- ✅ Offline functionality verification
-- ✅ Accessibility features (WCAG AA compliant)
-- ✅ Performance optimization (60fps target)
-- ✅ Comprehensive documentation
-- ✅ 100+ comprehensive tests
-
-🎯 **Ready For:**
-- User acceptance testing
-- Cultural accuracy verification with traditional experts
-- Beta testing and feedback
 - App store deployment preparation
 
 ## ✨ Features
@@ -86,7 +72,7 @@ A comprehensive mobile calendar application that integrates traditional Balinese
 ### 📱 Modern UI/UX
 - Material 3 design system with custom theming
 - Dark mode support with adaptive colors
-- Balinese cultural aesthetics (gold accents, traditional patterns)
+- Balinese cultural aesthetics (Lavender & Soft Yellow theme)
 - Custom Balinese pattern widgets for backgrounds
 - Google Fonts (Poppins & Inter) for beautiful typography
 - Smooth animations (60fps target)
@@ -319,7 +305,11 @@ Dev dependencies:
 
 4. **Run the app**
    ```bash
+   # Standard run (select device)
    flutter run
+
+   # Run on Web Server (Recommended for testing)
+   flutter run -d web-server --web-port=8080
    ```
 
 ### Assets Structure
@@ -762,7 +752,18 @@ class BaliCalendarDate {
 **Issue: Holy days not loading**
 - Solution: Verify `assets/data/holy_days.json` exists
 - Check that assets are declared in `pubspec.yaml`
+- Check that assets are declared in `pubspec.yaml`
 - Run `flutter clean` and rebuild
+
+**Issue: Browser fails to launch (Web)**
+- Solution: Use the web-server target instead of Chrome/Edge directly
+- Run: `flutter run -d web-server --web-port=8080`
+- Open `http://localhost:8080` manually in your browser
+
+**Issue: Windows build fails**
+- Solution: Ensure Windows desktop support is enabled
+- Run: `flutter config --enable-windows-desktop`
+- Run: `flutter create . --platforms=windows`
 
 ### Performance Tips
 

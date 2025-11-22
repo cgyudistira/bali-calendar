@@ -7,6 +7,10 @@ import 'holy_day_service.dart';
 import 'weton_service.dart';
 
 /// Service for managing local notifications
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+/// Service for managing local notifications
 class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin;
   final SettingsRepository _settingsRepository;
@@ -29,6 +33,9 @@ class NotificationService {
     if (_isInitialized) return true;
     
     try {
+      // Initialize time zones
+      tz.initializeTimeZones();
+      
       // Android initialization settings
       const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
       
@@ -201,12 +208,10 @@ class NotificationService {
     }
   }
   
-  /// Convert DateTime to TZDateTime (placeholder - needs timezone package)
-  /// For now, we'll use a simple conversion
-  dynamic _convertToTZDateTime(DateTime dateTime) {
-    // This is a simplified version
-    // In production, you should use timezone package
-    return dateTime;
+  /// Convert DateTime to TZDateTime
+  tz.TZDateTime _convertToTZDateTime(DateTime dateTime) {
+    final local = tz.local;
+    return tz.TZDateTime.from(dateTime, local);
   }
   
   /// Cancel a specific notification

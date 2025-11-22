@@ -89,10 +89,10 @@ class DetailDaySheet extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: AppColors.sunriseGradient,
+          colors: AppColors.primaryGradient,
         ),
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(24),
+          top: Radius.circular(32),
         ),
       ),
       child: Column(
